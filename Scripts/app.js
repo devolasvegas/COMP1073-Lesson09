@@ -2,49 +2,84 @@
 (function() {
 
     "use strict";
-    var output = "";
+
     var firstParagraph = document.getElementById("firstParagraph");
 
     // Instantiate new xhr object
     var request = new XMLHttpRequest();
-    request.open('GET', '../person.txt', true);
+    request.open('GET', '../people.txt', true);
     request.addEventListener('readystatechange', function() {
         if (request.readyState === 4) {
-            var Person = {}; /* var Person = new Object();   */
 
-            Person = JSON.parse(request.responseText);
-            
-            Person.sayHello = function() {
-                output += "<br><hr><br>" + Person.name + " says hello";
-            }
+            var people = {};
 
-            // for every key in the Person object, loop...
-            for (var key in Person) {
+            people = JSON.parse(request.responseText);
 
-                // check if the key is the familyNames array
-                if (key === "familyNames") {
-                    output += "<br>Family Names: <br>";
-                    output += "<hr><br>";
-                    output += "<ul>";
-                    for (var index = 0; index < Person.familyNames.length; index++) {
-                        output += "<li>" + Person.familyNames[index] + "</li>";
-                    } // for loop
-                    output += "</ul>";
-                } // if statement
-                else if (key === "sayHello") {
-                    Person.sayHello();
+            // Declare address array
+            var addressBook = []; /* var addressBook = new Array(); */
+
+            // Read in data from person.text
+            addressBook = people.addressBook;
+
+            var addressBookLength = addressBook.length;
+
+
+            // For each person in our address book . . . loop
+            for(var person = 0; person < addressBookLength; person ++){
+
+                var output = "";
+
+                // Assign the sayHello method to each person object
+                addressBook[person].sayHello = function() {
+                    output += "<br><hr><br>" + addressBook[person].name + " says hello.";
                 }
-                
-                // for all other cases do the following...
-                else {
 
-                    output += Person[key] + "<br>";
-                } // else statement
+                // for every key in the Person object, loop...
+                for (var key in addressBook[person]) {
 
-            } // for in
+                    // check if the key is the familyNames array
+                    if (key === "familyNames") {
+                        output += "<br>Family Names: <br>";
+                        output += "<hr><br>";
+                        output += "<ul>";
+                        for (var index = 0; index < addressBook[person].familyNames.length; index++) {
+                            output += "<li>" + addressBook[person].familyNames[index] + "</li>";
+                        } // for loop
+                        output += "</ul>";
+                    } // if statement
+                    else if (key === "sayHello") {
+                        addressBook[person].sayHello();
+                    }
 
-            firstParagraph.innerHTML = output;
+                    // for all other cases do the following...
+                    else {
+
+                        output += addressBook[person][key] + "<br>";
+                    } // else statement
+
+                } // inner for loop
+
+                var paragraphString = "paragraph" + (person + 1);
+                var paragraph = document.getElementById(paragraphString);
+                paragraph.innerHTML = output;
+
+                firstParagraph.innerHTML = output;
+
+            } // outer for loop
+
         }
+
+        console.log(addressBook);
+
+        //var Person = {}; /* var Person = new Object();   */
+/*
+        Person = JSON.parse(request.responseText);
+
+        Person.sayHello = function() {
+            output += "<br><hr><br>" + Person.name + " says hello";
+        } */
+
+
     });
 
     request.send();
