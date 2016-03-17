@@ -15,7 +15,7 @@
          },
          {
            "age": 35,
-           "name": "Rick",
+           "name": "Rich",
            "address": "10 Georgian Drive",
            "city": "Barrie",
            "province": "Ontario",

@@ -7,7 +7,7 @@
 
     // Instantiate new xhr object
     var request = new XMLHttpRequest();
-    request.open('GET', '../people.txt', true);
+    request.open('GET', '/COMP1073-Lesson09/people.txt', true);
     request.addEventListener('readystatechange', function() {
         if (request.readyState === 4) {
 
@@ -23,9 +23,10 @@
 
             var addressBookLength = addressBook.length;
 
+            console.log(addressBookLength);
 
             // For each person in our address book . . . loop
-            for(var person = 0; person < addressBookLength; person ++){
+            for(var person = 0; person < addressBookLength; person++){
 
                 var output = "";
 
@@ -33,6 +34,8 @@
                 addressBook[person].sayHello = function() {
                     output += "<br><hr><br>" + addressBook[person].name + " says hello.";
                 }
+
+                console.log(addressBook[person]);
 
                 // for every key in the Person object, loop...
                 for (var key in addressBook[person]) {
@@ -60,10 +63,9 @@
                 } // inner for loop
 
                 var paragraphString = "paragraph" + (person + 1);
+                console.log(paragraphString);
                 var paragraph = document.getElementById(paragraphString);
                 paragraph.innerHTML = output;
-
-                firstParagraph.innerHTML = output;
 
             } // outer for loop
 
